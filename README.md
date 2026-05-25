@@ -11,9 +11,13 @@
 
 **SvfEye lets MLLMs decide when to look more carefully and where to look.**
 
-[Paper](https://arxiv.org/abs/2603.00171) | [Installation](#installation) | [Evaluation](#evaluation) | [Citation](#citation)
+[Paper](https://arxiv.org/abs/2603.00171) | [Method](#method) | [Results](#main-results) | [Installation](#installation) | [Citation](#citation)
 
 </div>
+
+<p align="center">
+  <img src="assets/overview.png" width="760" alt="SvfEye overview: deciding when and where to look more carefully.">
+</p>
 
 ## Overview
 
@@ -32,31 +36,38 @@ SvfEye is a training-free framework for adaptive visual-semantic fusion in multi
 
 ## Method
 
-SvfEye follows a two-stage inference pipeline:
+SvfEye follows a two-stage inference pipeline. The confidence module answers **when to inspect**, while semantic-guided localization answers **where to inspect**. Together, they reduce perceptual redundancy and attention drift.
 
-```mermaid
-flowchart LR
-    A["Input image and question"] --> B["Global MLLM response"]
-    B --> C{"Confidence high?"}
-    C -- "Yes" --> D["Return global answer"]
-    C -- "No" --> E["Extract semantic targets"]
-    E --> F["Locate query-relevant regions"]
-    F --> G["Fuse global and local views"]
-    G --> H["Final answer"]
-```
-
-The confidence module answers **when to inspect**, while semantic-guided localization answers **where to inspect**. Together, they reduce perceptual redundancy and attention drift.
+<p align="center">
+  <img src="assets/pipeline.png" width="920" alt="SvfEye pipeline.">
+</p>
 
 ## Main Results
 
-SvfEye improves strong open-source MLLM baselines on both general and high-resolution visual reasoning benchmarks.
+SvfEye improves strong open-source MLLM baselines on both general reasoning and high-resolution visual reasoning benchmarks. The gains are especially clear on V*-Bench and HR-Bench, where small objects, subtle attributes, and spatial relations require more precise visual evidence.
 
-| Backbone | Key Setting | Baseline | SvfEye | Gain |
+### Performance Snapshot
+
+| Backbone | Benchmark | Baseline | SvfEye | Gain |
 | :--- | :--- | ---: | ---: | ---: |
+| LLaVA-v1.5-7B | AOKVQA | 71.00 | 72.90 | +1.90 |
+| LLaVA-v1.5-7B | POPE | 86.98 | 87.37 | +0.39 |
 | LLaVA-v1.5-7B | V*-Bench | 48.68 | 62.80 | +14.12 |
 | LLaVA-v1.5-7B | HR-Bench 4K | 36.13 | 47.38 | +11.25 |
+| LLaVA-v1.5-7B | HR-Bench 8K | 32.13 | 42.00 | +9.87 |
+| Qwen2.5-VL-3B | AOKVQA | 71.44 | 73.10 | +1.66 |
+| Qwen2.5-VL-3B | POPE | 87.20 | 89.12 | +1.92 |
 | Qwen2.5-VL-3B | V*-Bench | 75.90 | 86.38 | +10.48 |
+| Qwen2.5-VL-3B | HR-Bench 4K | 67.50 | 73.25 | +5.75 |
 | Qwen2.5-VL-3B | HR-Bench 8K | 58.88 | 70.00 | +11.12 |
+
+### Efficiency
+
+SvfEye avoids exhaustive image search and keeps inference close to lightweight attention-based methods, while substantially reducing runtime compared with ZoomEye on high-resolution benchmarks.
+
+<p align="center">
+  <img src="assets/efficiency.png" width="860" alt="Inference time comparison between ZoomEye, SvfEye, and MLLMs-Know.">
+</p>
 
 <details>
 <summary><b>Full benchmark table</b></summary>
@@ -80,6 +91,14 @@ Results are reported on AOKVQA, POPE, V*-Bench, HR-Bench 4K, and HR-Bench 8K. Hi
 | Qwen2.5-VL-3B | Delta vs. baseline | - | +1.66 | +1.92 | +10.48 | +5.75 | +11.12 |
 
 </details>
+
+## Qualitative Examples
+
+SvfEye uses semantic targets from the question to focus on small or ambiguous visual evidence, such as tiny object logos, low-contrast regions, and multi-target spatial relations.
+
+<p align="center">
+  <img src="assets/qualitative_examples.png" width="760" alt="Qualitative examples of adaptive visual reasoning.">
+</p>
 
 ## Installation
 

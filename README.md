@@ -1,18 +1,65 @@
-# SvfEye: A Semantic-Visual Fusion Framework with Multi-Scale Visual Context for Multimodal Reasoning
+<div align="center">
+
+# SvfEye
+
+### A Semantic-Visual Fusion Framework with Multi-Scale Visual Context for Multimodal Reasoning
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.00171-b31b1b.svg)](https://arxiv.org/abs/2603.00171)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776ab.svg)](https://www.python.org/)
+[![Framework](https://img.shields.io/badge/Framework-Training--Free-2f855a.svg)](#method)
+[![Model](https://img.shields.io/badge/Backbone-Qwen2.5--VL%20%7C%20LLaVA-6b46c1.svg)](#main-results)
 
-SvfEye is a training-free framework for adaptive visual-semantic fusion in multimodal large language models. It decides **when** extra local visual evidence is needed with token confidence, then decides **where** to look with semantic-guided localization. This avoids blind cropping, reduces attention drift, and improves fine-grained visual reasoning without additional model training.
+**SvfEye lets MLLMs decide when to look more carefully and where to look.**
 
-## Highlights
+[Paper](https://arxiv.org/abs/2603.00171) | [Installation](#installation) | [Evaluation](#evaluation) | [Citation](#citation)
 
-- **Training-free and plug-and-play.** SvfEye can be attached to open-source MLLMs without parameter updates.
-- **Adaptive local inspection.** A confidence-based decision module skips unnecessary crops for easy samples.
-- **Semantic-guided localization.** Query targets are extracted from the question and used to guide attention-based region selection.
-- **Efficient inference.** SvfEye achieves an approximately **4.0x** speedup over the search-based ZoomEye pipeline on high-resolution reasoning while remaining competitive in accuracy.
+</div>
+
+## Overview
+
+SvfEye is a training-free framework for adaptive visual-semantic fusion in multimodal large language models. It avoids blind cropping by first estimating whether extra local evidence is needed from token confidence, then uses semantic-guided localization to crop query-relevant regions. This improves fine-grained visual reasoning without additional model training.
+
+<table>
+  <tr>
+    <td><b>Training-free</b><br>No parameter updates or task-specific fine-tuning.</td>
+    <td><b>Adaptive</b><br>Confident samples keep the global view and skip redundant crops.</td>
+  </tr>
+  <tr>
+    <td><b>Semantic-guided</b><br>Question targets guide attention-based region selection.</td>
+    <td><b>Efficient</b><br>About 4.0x faster than ZoomEye on high-resolution reasoning.</td>
+  </tr>
+</table>
+
+## Method
+
+SvfEye follows a two-stage inference pipeline:
+
+```mermaid
+flowchart LR
+    A["Input image and question"] --> B["Global MLLM response"]
+    B --> C{"Confidence high?"}
+    C -- "Yes" --> D["Return global answer"]
+    C -- "No" --> E["Extract semantic targets"]
+    E --> F["Locate query-relevant regions"]
+    F --> G["Fuse global and local views"]
+    G --> H["Final answer"]
+```
+
+The confidence module answers **when to inspect**, while semantic-guided localization answers **where to inspect**. Together, they reduce perceptual redundancy and attention drift.
 
 ## Main Results
+
+SvfEye improves strong open-source MLLM baselines on both general and high-resolution visual reasoning benchmarks.
+
+| Backbone | Key Setting | Baseline | SvfEye | Gain |
+| :--- | :--- | ---: | ---: | ---: |
+| LLaVA-v1.5-7B | V*-Bench | 48.68 | 62.80 | +14.12 |
+| LLaVA-v1.5-7B | HR-Bench 4K | 36.13 | 47.38 | +11.25 |
+| Qwen2.5-VL-3B | V*-Bench | 75.90 | 86.38 | +10.48 |
+| Qwen2.5-VL-3B | HR-Bench 8K | 58.88 | 70.00 | +11.12 |
+
+<details>
+<summary><b>Full benchmark table</b></summary>
 
 Results are reported on AOKVQA, POPE, V*-Bench, HR-Bench 4K, and HR-Bench 8K. Higher is better.
 
@@ -32,6 +79,8 @@ Results are reported on AOKVQA, POPE, V*-Bench, HR-Bench 4K, and HR-Bench 8K. Hi
 | Qwen2.5-VL-3B | **SvfEye** | yes | **73.10** | **89.12** | 86.38 | **73.25** | **70.00** |
 | Qwen2.5-VL-3B | Delta vs. baseline | - | +1.66 | +1.92 | +10.48 | +5.75 | +11.12 |
 
+</details>
+
 ## Installation
 
 ```bash
@@ -49,7 +98,7 @@ export MODEL_PATH=/path/to/Qwen2.5-VL-3B-Instruct
 export ANNO_PATH=/path/to/svfeye_data
 ```
 
-The annotation directory is expected to contain benchmark folders such as:
+Expected annotation layout:
 
 ```text
 svfeye_data/
@@ -59,22 +108,18 @@ svfeye_data/
 
 ## Evaluation
 
-Run SvfEye on HR-Bench 4K:
+Run SvfEye:
 
 ```bash
 bash perform_svfeye_4k.sh
+bash perform_svfeye_8k.sh
 ```
 
-Run the direct-answer baseline on HR-Bench 4K:
+Run the direct-answer baseline:
 
 ```bash
 bash perform_svfeye_4k.sh direct
-```
-
-Run SvfEye on HR-Bench 8K:
-
-```bash
-bash perform_svfeye_8k.sh
+bash perform_svfeye_8k.sh direct
 ```
 
 Use a custom confidence threshold:
@@ -83,13 +128,13 @@ Use a custom confidence threshold:
 CONF_THRESHOLD=0.96 bash perform_svfeye_4k.sh
 ```
 
-Evaluate a merged HR-Bench answer file:
+Score a merged HR-Bench answer file:
 
 ```bash
 python svfeye/eval/eval_results_hr-bench.py --answers-file /path/to/result.jsonl
 ```
 
-## Project Structure
+## Repository Layout
 
 ```text
 SvfEye/

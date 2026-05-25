@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use SvfEye in your research, please cite this paper."
+title: "SvfEye: A Semantic-Visual Fusion Framework with Multi-Scale Visual Context for Multimodal Reasoning"
+authors:
+  - family-names: Shen
+    given-names: Yuxiang
+  - family-names: Huang
+    given-names: Hailong
+  - family-names: Gao
+    given-names: Zhenkun
+  - family-names: Li
+    given-names: Xueheng
+  - family-names: Zhou
+    given-names: Man
+  - family-names: Xie
+    given-names: Chengjun
+  - family-names: Che
+    given-names: Haoxuan
+  - family-names: He
+    given-names: Xuanhua
+  - family-names: Zhang
+    given-names: Jie
+date-released: "2026-02-26"
+url: "https://arxiv.org/abs/2603.00171"
+identifiers:
+  - type: other
+    value: "arXiv:2603.00171"

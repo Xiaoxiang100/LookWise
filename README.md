@@ -15,10 +15,6 @@
 
 </div>
 
-<p align="center">
-  <img src="assets/overview.png" width="760" alt="SvfEye overview: deciding when and where to look more carefully.">
-</p>
-
 ## Overview
 
 SvfEye is a training-free framework for adaptive visual-semantic fusion in multimodal large language models. It avoids blind cropping by first estimating whether extra local evidence is needed from token confidence, then uses semantic-guided localization to crop query-relevant regions. This improves fine-grained visual reasoning without additional model training.
@@ -91,14 +87,6 @@ Results are reported on AOKVQA, POPE, V*-Bench, HR-Bench 4K, and HR-Bench 8K. Hi
 | Qwen2.5-VL-3B | Delta vs. baseline | - | +1.66 | +1.92 | +10.48 | +5.75 | +11.12 |
 
 </details>
-
-## Qualitative Examples
-
-SvfEye uses semantic targets from the question to focus on small or ambiguous visual evidence, such as tiny object logos, low-contrast regions, and multi-target spatial relations.
-
-<p align="center">
-  <img src="assets/qualitative_examples.png" width="760" alt="Qualitative examples of adaptive visual reasoning.">
-</p>
 
 ## Installation
 

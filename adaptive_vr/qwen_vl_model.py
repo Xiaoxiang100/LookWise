@@ -8,10 +8,10 @@ import torchvision.transforms as T
 from torchvision.transforms.functional import InterpolationMode
 
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
-from svfeye.utils import *
+from adaptive_vr.utils import *
 BOX_COLOR = "red"
 
-class SVFEYModelQwenVL:
+class AdaptiveVRQwenVLModel:
     def __init__(self, model_path: str, device: str = "cuda:0", torch_dtype=torch.bfloat16, **kwargs) -> None:
         self.device = device
         self.dtype = torch_dtype

@@ -8,9 +8,9 @@ import numpy as np
 from transformers import AutoTokenizer
 from llava.model.language_model.llava_qwen import LlavaQwenForCausalLM
 from llava.utils import disable_torch_init
-from svfeye.utils import *
+from adaptive_vr.utils import *
 
-class SVFEYModel(ABC):
+class AdaptiveVRModel(ABC):
     def __init__(self, model_path: str, conv_type: str = "qwen_1_5", device: str = "cuda:0", torch_dtype=torch.float16, attn_implementation="flash_attention_2", padding_side="left", **kwargs) -> None:
         disable_torch_init()
         self.device = device

@@ -19,22 +19,22 @@
 
 ## Overview
 
-LookWise is a training-free framework for adaptive visual-semantic fusion in multimodal large language models. It avoids blind cropping by first estimating whether extra local evidence is needed from token confidence, then uses semantic-guided localization to crop query-relevant regions. This improves fine-grained visual reasoning without additional model training.
+LookWise is a training-free inference framework for fine-grained visual reasoning in multimodal large language models. Instead of applying extra visual processing to every query, it first estimates **when** the model needs more local evidence from answer confidence, then determines **where** to inspect by grounding question-relevant targets with semantic-guided localization. The selected regions are reintroduced as focused visual context, improving small-object, attribute, and spatial reasoning without additional training.
 
 <table>
   <tr>
-    <td><b>Training-free</b><br>No parameter updates or task-specific fine-tuning.</td>
-    <td><b>Adaptive</b><br>Confident samples keep the global view and skip redundant crops.</td>
+    <td><b>Training-free</b><br>Works at inference time without parameter updates or task-specific fine-tuning.</td>
+    <td><b>When-aware</b><br>Uses confidence to decide whether a query needs focused visual inspection.</td>
   </tr>
   <tr>
-    <td><b>Semantic-guided</b><br>Question targets guide attention-based region selection.</td>
-    <td><b>Efficient</b><br>About 4.0x faster than ZoomEye on high-resolution reasoning.</td>
+    <td><b>Where-aware</b><br>Localizes question-relevant visual targets before constructing zoomed context.</td>
+    <td><b>Efficient</b><br>Avoids exhaustive search while keeping high-resolution reasoning practical.</td>
   </tr>
 </table>
 
 ## Method
 
-LookWise follows a two-stage inference pipeline. The confidence module answers **when to inspect**, while semantic-guided localization answers **where to inspect**. Together, they reduce perceptual redundancy and attention drift.
+LookWise follows a two-stage inference pipeline. The confidence module answers **when to look**, while semantic-guided localization answers **where to look**. Together, they reduce redundant cropping and help the model focus on fine-grained evidence.
 
 <p align="center">
   <img src="assets/pipeline.png" width="920" alt="LookWise pipeline.">

@@ -6,9 +6,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "svfeye"
+name = "adaptive-vr"
 version = "1.7.0.dev0"
-description = "SvfEye: training-free adaptive visual-semantic fusion for multimodal reasoning"
+description = "AdaptiveVR: training-free adaptive visual-semantic fusion for multimodal reasoning"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -26,7 +26,7 @@ standalone = [
 
 
 train = [
-    "svfeye[standalone]",
+    "adaptive-vr[standalone]",
     "numpy==1.26.1",
     "open_clip_torch",
     "fastapi",
@@ -62,11 +62,11 @@ train = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Xiaoxiang100/SvfEye"
+"Homepage" = "https://github.com/Xiaoxiang100/AdaptiveVR"
 "Paper" = "https://arxiv.org/abs/2603.00171"
 
 [tool.setuptools.packages.find]
-include = ["svfeye*", "trl*"]
+include = ["adaptive_vr*", "trl*"]
 exclude = [
     "assets*",
     "benchmark*",

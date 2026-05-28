@@ -1,8 +1,10 @@
 <div align="center">
 
-# AdaptiveVR
+<h1 align="center">
+  <img src="assets/logo.png" width="56" alt="LookWise logo"> LookWise
+</h1>
 
-### A Semantic-Visual Fusion Framework with Multi-Scale Visual Context for Multimodal Reasoning
+### Knowing When and Where to Look for Fine-Grained Visual Reasoning in Multimodal Large Language Models
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.00171-b31b1b.svg)](https://arxiv.org/abs/2603.00171)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776ab.svg)](https://www.python.org/)

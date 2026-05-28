@@ -6,9 +6,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "adaptive-vr"
+name = "lookwise"
 version = "1.7.0.dev0"
-description = "AdaptiveVR: training-free adaptive visual-semantic fusion for multimodal reasoning"
+description = "LookWise: knowing when and where to look for fine-grained visual reasoning in multimodal large language models"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -26,7 +26,7 @@ standalone = [
 
 
 train = [
-    "adaptive-vr[standalone]",
+    "lookwise[standalone]",
     "numpy==1.26.1",
     "open_clip_torch",
     "fastapi",
@@ -62,11 +62,11 @@ train = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Xiaoxiang100/AdaptiveVR"
+"Homepage" = "https://github.com/Xiaoxiang100/LookWise"
 "Paper" = "https://arxiv.org/abs/2603.00171"
 
 [tool.setuptools.packages.find]
-include = ["adaptive_vr*", "trl*"]
+include = ["lookwise*", "trl*"]
 exclude = [
     "assets*",
     "benchmark*",

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use AdaptiveVR in your research, please cite this paper."
-title: "AdaptiveVR: A Semantic-Visual Fusion Framework with Multi-Scale Visual Context for Multimodal Reasoning"
+message: "If you use LookWise in your research, please cite this paper."
+title: "LookWise: Knowing When and Where to Look for Fine-Grained Visual Reasoning in Multimodal Large Language Models"
 authors:
   - family-names: Shen
     given-names: Yuxiang
